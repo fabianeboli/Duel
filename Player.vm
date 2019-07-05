@@ -1,0 +1,371 @@
+function Player.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push constant 4
+call String.new 1
+push constant 76
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 107
+call String.appendChar 2
+pop this 2
+push argument 2
+pop this 3
+push constant 3599
+pop this 5
+push pointer 0
+return
+function Player.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Player.DrawPlayer 0
+push argument 0
+pop pointer 0
+push constant 16384
+push this 5
+add
+pop this 4
+push this 4
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 32
+add
+push constant 4088
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 64
+add
+push constant 8188
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 96
+add
+push constant 8188
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 128
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 160
+add
+push constant 3960
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 192
+add
+push constant 544
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 224
+add
+push constant 128
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 288
+add
+push constant 448
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 320
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 352
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 384
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 448
+add
+push constant 320
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 480
+add
+push constant 1904
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Player.ErasePlayer 0
+push argument 0
+pop pointer 0
+push constant 16384
+push this 5
+add
+pop this 4
+push this 4
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 4
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Player.moveUp 0
+push argument 0
+pop pointer 0
+push this 5
+push constant 680
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.ErasePlayer 1
+pop temp 0
+push pointer 0
+push constant 64
+call Player.subToLocation 2
+pop temp 0
+push pointer 0
+call Player.DrawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.moveLeft 0
+push argument 0
+pop pointer 0
+push this 5
+push constant 258
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.ErasePlayer 1
+pop temp 0
+push pointer 0
+push constant 1
+call Player.subToLocation 2
+pop temp 0
+push pointer 0
+call Player.DrawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.moveDown 0
+push argument 0
+pop pointer 0
+push this 5
+push constant 7600
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.ErasePlayer 1
+pop temp 0
+push pointer 0
+push constant 64
+call Player.addToLocation 2
+pop temp 0
+push pointer 0
+call Player.DrawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.moveRight 0
+push argument 0
+pop pointer 0
+push this 5
+push constant 8192
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Player.ErasePlayer 1
+pop temp 0
+push pointer 0
+push constant 1
+call Player.addToLocation 2
+pop temp 0
+push pointer 0
+call Player.DrawPlayer 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Player.getHP 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Player.getName 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Player.getPlayerLocation 0
+push argument 0
+pop pointer 0
+push this 5
+return
+function Player.setDefaultLocation 0
+push argument 0
+pop pointer 0
+push constant 3599
+pop this 5
+push constant 0
+return
+function Player.addToLocation 0
+push argument 0
+pop pointer 0
+push this 5
+push argument 1
+add
+pop this 5
+push constant 0
+return
+function Player.subToLocation 0
+push argument 0
+pop pointer 0
+push this 5
+push argument 1
+sub
+pop this 5
+push constant 0
+return

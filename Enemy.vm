@@ -1,0 +1,355 @@
+function Enemy.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push constant 2
+pop this 0
+push argument 0
+call LCGRandom.setSeed 1
+pop temp 0
+push constant 1000
+push constant 3000
+call LCGRandom.randRange 2
+pop this 2
+push pointer 0
+return
+function Enemy.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Enemy.DrawEnemy 0
+push argument 0
+pop pointer 0
+push constant 16384
+push this 2
+add
+pop this 1
+push this 1
+push constant 0
+add
+push constant 16376
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 32
+add
+push constant 8580
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 64
+add
+push constant 8196
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 96
+add
+push constant 19506
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 128
+add
+push constant 29647
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 160
+add
+push constant 32767
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 192
+add
+push constant 32767
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 224
+add
+push constant 32767
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 256
+add
+push constant 32767
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 288
+add
+push constant 31423
+neg
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 320
+add
+push constant 20482
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 352
+add
+push constant 28686
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 384
+add
+push constant 23402
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 416
+add
+push constant 21650
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 448
+add
+push constant 17426
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 480
+add
+push constant 16386
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Enemy.EraseEnemy 0
+push argument 0
+pop pointer 0
+push constant 16384
+push this 2
+add
+pop this 1
+push this 1
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push this 1
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Enemy.moveUp 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 680
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Enemy.EraseEnemy 1
+pop temp 0
+push pointer 0
+push constant 64
+call Enemy.subToLocation 2
+pop temp 0
+push pointer 0
+call Enemy.DrawEnemy 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Enemy.moveLeft 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 258
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Enemy.EraseEnemy 1
+pop temp 0
+push pointer 0
+push constant 1
+call Enemy.subToLocation 2
+pop temp 0
+push pointer 0
+call Enemy.DrawEnemy 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Enemy.moveDown 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 7600
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Enemy.EraseEnemy 1
+pop temp 0
+push pointer 0
+push constant 64
+call Enemy.addToLocation 2
+pop temp 0
+push pointer 0
+call Enemy.DrawEnemy 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Enemy.moveRight 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 8192
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Enemy.EraseEnemy 1
+pop temp 0
+push pointer 0
+push constant 1
+call Enemy.addToLocation 2
+pop temp 0
+push pointer 0
+call Enemy.DrawEnemy 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Enemy.getHP 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Enemy.getEnemyLocation 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Enemy.addToLocation 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+add
+pop this 2
+push constant 0
+return
+function Enemy.subToLocation 0
+push argument 0
+pop pointer 0
+push this 2
+push argument 1
+sub
+pop this 2
+push constant 0
+return

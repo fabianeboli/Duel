@@ -1,0 +1,142 @@
+// MODEL - Player(Link)
+
+class Player{
+    field int x, y; // screen location of a player' top-left corner
+    field String name; // player's name
+    field int HP; // player's default amount of health points
+    field int memAddress, location;
+    // field Sword sword; // player's sword
+
+    constructor Player new(int Ax, int Ay, int numofHP){
+        let x = Ax;
+        let y = Ay;
+        let name = "Link";
+        let HP = numofHP;
+        let location = 3599;
+        return this;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+    method void DrawPlayer(){
+        let memAddress = 16384+location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 4088);
+        do Memory.poke(memAddress+64, 8188);
+        do Memory.poke(memAddress+96, 8188);
+        do Memory.poke(memAddress+128, 2056);
+        do Memory.poke(memAddress+160, 3960);
+        do Memory.poke(memAddress+192, 544);
+        do Memory.poke(memAddress+224, 128);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 448);
+        do Memory.poke(memAddress+320, 2056);
+        do Memory.poke(memAddress+352, 2056);
+        do Memory.poke(memAddress+384, 2056);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 320);
+        do Memory.poke(memAddress+480, 1904);
+        return;
+    }
+
+    method void ErasePlayer(){
+        let memAddress = 16384+location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+
+    // Moving
+    // X and Y must be larger then respectively, x =  1 y = 15 
+    //  if (memAddress + 256 > 16384 + 256) {
+
+
+    method void moveUp(){
+        if (location > 680) {
+            do ErasePlayer();
+          //  do Screen.setColor(false);
+            do subToLocation(64);
+            do DrawPlayer();
+           // do Screen.setColor(true);
+        }
+        return;
+    }
+
+    method void moveLeft(){
+        if (location > 258) {
+            do ErasePlayer();
+            //do Screen.setColor(false);
+            do subToLocation(1);
+            do DrawPlayer();
+           // do Screen.setColor(true);
+        }
+        return;
+    }
+    
+
+    method void moveDown(){
+         if (location < 7600) {
+            do ErasePlayer();
+            // do Screen.setColor(false);
+            do addToLocation(64);
+            do DrawPlayer();
+            // do Screen.setColor(true);
+        }
+        return;
+    }
+
+    method void moveRight(){
+         if (location < 8192) {
+            do ErasePlayer();
+            // do Screen.setColor(false);
+            do addToLocation(1);
+            do DrawPlayer();
+            // do Screen.setColor(true);
+        }
+        return;
+    }
+
+    //Accessors
+    method int getHP(){
+        return HP;    
+    }
+
+    method String getName(){
+        return name;
+    }
+
+    method int getPlayerLocation(){
+        return location;
+    }
+    method void setDefaultLocation(){
+        let location = 3599;
+        return;
+    }
+    
+    method void addToLocation(int loc){
+        let location = location + loc;
+        return;
+    }
+    method void subToLocation(int loc){
+        let location = location - loc;
+        return;
+    }
+
+}

@@ -1,0 +1,86 @@
+// View - display
+
+class View{
+    field Player player;
+    field String name;
+    field int HPCounter;
+    field int memAddress;
+    field int location;
+    field int score;
+    
+    constructor View new(String characterName){
+        let name = characterName;
+        return this;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    //Draw current HP of a main character
+    method void DrawStatus(int currentHP, int currentScore){
+        let HPCounter = 0;
+        let location = 2;
+        do Output.printString(name);
+          while (HPCounter < currentHP + 2){
+            do eraseHPSymbol(location);
+            let location = location + 1;
+            let HPCounter = HPCounter + 1;
+        }
+        let HPCounter = 0;
+        let location = 2;
+        while (HPCounter < currentHP){
+            do HPsymbol(location);
+            let location = location + 1;
+            let HPCounter = HPCounter + 1;
+        }
+        do Output.moveCursor(0, 50);
+        do Output.printString("Score: ");
+        do Output.moveCursor(0, 57);
+        do Output.printString("0");
+        do Screen.drawLine(0, 15, 510, 15);
+        return;
+    }
+    
+    // Draw one single heart
+    method void HPsymbol(int location){
+        let memAddress = 16384+location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 3096);
+        do Memory.poke(memAddress+64, 7740);
+        do Memory.poke(memAddress+96, 16254);
+        do Memory.poke(memAddress+128, 32767);
+        do Memory.poke(memAddress+160, 32767);
+        do Memory.poke(memAddress+192, 32767);
+        do Memory.poke(memAddress+224, 16382);
+        do Memory.poke(memAddress+256, 8188);
+        do Memory.poke(memAddress+288, 4088);
+        do Memory.poke(memAddress+320, 2032);
+        do Memory.poke(memAddress+352, 992);
+        do Memory.poke(memAddress+384, 448);
+        do Memory.poke(memAddress+416, 128);
+	    return;
+    }
+
+    method void eraseHPSymbol(int location){
+        let memAddress = 16384+location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+	    return;
+    }
+
+
+}

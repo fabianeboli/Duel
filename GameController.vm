@@ -1,0 +1,377 @@
+function GameController.new 0
+push constant 9
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+pop this 4
+push constant 3
+pop this 0
+push constant 0
+pop this 3
+push constant 4000
+pop this 2
+push constant 0
+push constant 0
+push this 0
+call Player.new 3
+pop this 6
+push this 6
+call Player.getName 1
+call View.new 1
+pop this 5
+push this 5
+push this 0
+push this 3
+call View.DrawStatus 3
+pop temp 0
+push constant 1015
+call Enemy.new 1
+pop this 7
+call Sword.new 0
+pop this 8
+push pointer 0
+return
+function GameController.run 0
+push argument 0
+pop pointer 0
+push this 6
+call Player.DrawPlayer 1
+pop temp 0
+push this 7
+call Enemy.DrawEnemy 1
+pop temp 0
+push pointer 0
+call GameController.controlPlayer 1
+pop temp 0
+push constant 0
+return
+function GameController.controlPlayer 1
+push argument 0
+pop pointer 0
+push constant 0
+pop this 4
+label WHILE_EXP0
+push this 4
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 0
+push local 0
+push constant 0
+eq
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop this 4
+label IF_FALSE1
+push local 0
+push constant 87
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 1
+pop this 1
+label IF_FALSE2
+push local 0
+push constant 65
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 2
+pop this 1
+label IF_FALSE3
+push local 0
+push constant 83
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 3
+pop this 1
+label IF_FALSE4
+push local 0
+push constant 68
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 4
+pop this 1
+label IF_FALSE5
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 5
+pop this 1
+label IF_FALSE6
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 6
+pop this 1
+label IF_FALSE7
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 7
+pop this 1
+label IF_FALSE8
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push constant 8
+pop this 1
+label IF_FALSE9
+push pointer 0
+call GameController.movePlayer 1
+pop temp 0
+push pointer 0
+call GameController.CheckCollision 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function GameController.movePlayer 0
+push argument 0
+pop pointer 0
+push this 8
+push this 2
+call Sword.EraseSword 2
+pop temp 0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 6
+call Player.moveUp 1
+pop temp 0
+label IF_FALSE0
+push this 1
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 6
+call Player.moveLeft 1
+pop temp 0
+label IF_FALSE1
+push this 1
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 6
+call Player.moveDown 1
+pop temp 0
+label IF_FALSE2
+push this 1
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 6
+call Player.moveRight 1
+pop temp 0
+label IF_FALSE3
+push this 1
+push constant 5
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 6
+call Player.getPlayerLocation 1
+push constant 640
+sub
+pop this 2
+push this 8
+push this 2
+call Sword.drawSwordUp 2
+pop temp 0
+label IF_FALSE4
+push this 1
+push constant 6
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 6
+call Player.getPlayerLocation 1
+push constant 1
+sub
+pop this 2
+push this 8
+push this 2
+call Sword.drawSwordLeft 2
+pop temp 0
+label IF_FALSE5
+push this 1
+push constant 7
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 6
+call Player.getPlayerLocation 1
+push constant 640
+add
+pop this 2
+push this 8
+push this 2
+call Sword.drawSwordDown 2
+pop temp 0
+label IF_FALSE6
+push this 1
+push constant 8
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 6
+call Player.getPlayerLocation 1
+push constant 1
+add
+pop this 2
+push this 8
+push this 2
+call Sword.drawSwordRight 2
+pop temp 0
+label IF_FALSE7
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function GameController.CheckCollision 0
+push argument 0
+pop pointer 0
+push this 6
+call Player.getPlayerLocation 1
+push this 7
+call Enemy.getEnemyLocation 1
+push constant 2
+sub
+eq
+push this 6
+call Player.getPlayerLocation 1
+or
+push this 7
+call Enemy.getEnemyLocation 1
+push constant 2
+add
+eq
+push this 6
+call Player.getPlayerLocation 1
+or
+push this 7
+call Enemy.getEnemyLocation 1
+push constant 64
+add
+eq
+push this 6
+call Player.getPlayerLocation 1
+or
+push this 7
+call Enemy.getEnemyLocation 1
+push constant 64
+sub
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push constant 1
+sub
+pop this 0
+push this 0
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop this 4
+label IF_FALSE1
+push this 6
+call Player.setDefaultLocation 1
+pop temp 0
+push this 7
+call Enemy.EraseEnemy 1
+pop temp 0
+push this 7
+call Enemy.DrawEnemy 1
+pop temp 0
+push this 5
+push this 0
+push constant 0
+call View.DrawStatus 3
+pop temp 0
+label IF_FALSE0
+push this 2
+push this 7
+call Enemy.getEnemyLocation 1
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 7
+call Enemy.dispose 1
+pop temp 0
+push constant 980
+call Enemy.new 1
+pop this 7
+push this 7
+call Enemy.DrawEnemy 1
+pop temp 0
+push this 5
+push this 0
+push this 3
+push constant 200
+add
+call View.DrawStatus 3
+pop temp 0
+label IF_FALSE2
+push constant 0
+return
+function GameController.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

@@ -1,0 +1,120 @@
+// GameController - Game's Rules 
+
+class GameController{
+    field int currentHP, direction, currentSwordPosition, currentScore;
+    field boolean exit;
+    field View view;
+    field Player player;
+    field Enemy enemy;
+    field Sword sword;
+
+    constructor GameController new(){
+        let exit = false;
+        let currentHP = 3;
+        let currentScore = 0;
+        let currentSwordPosition = 4000;
+        let player = Player.new(0, 0, currentHP);
+        let view = View.new(player.getName());
+        do view.DrawStatus(currentHP, currentScore);
+        let enemy = Enemy.new(1015);
+        let sword = Sword.new();
+        return this;
+    }
+
+    method void run(){
+        //do Output.printString();
+        do player.DrawPlayer();
+        do enemy.DrawEnemy();
+        do controlPlayer();
+        return;
+    }
+
+    method void controlPlayer(){
+        var char key;  // the key currently pressed by the user
+        let exit = false;
+      
+      while (~exit) {
+         // waits for a key to be pressed
+        let key = Keyboard.keyPressed();
+        if (~(key = 0)) {
+            if (key = 81)  { let exit = true; }     // q key
+            if (key = 87)  { let direction = 1; }   // W key - moveUp
+            if (key = 65)  { let direction = 2; }   // A key - moveLeft
+            if (key = 83)  { let direction = 3; }   // S key - moveDown
+            if (key = 68)  { let direction = 4; }   // D key - moveRight
+            if (key = 131) { let direction = 5; }   // up arrow - SwordUp
+            if (key = 130) { let direction = 6; }   // left arrow - SwordLeft
+            if (key = 133) { let direction = 7; }   // down arrow - SwordDown
+            if (key = 132) { let direction = 8; }   // right arrow - SwordRight
+            do movePlayer();
+            do CheckCollision();
+         }
+        let key = 0;
+     } 
+     return;
+    }
+
+    method void movePlayer(){
+        do sword.EraseSword(currentSwordPosition);
+        if (direction = 1) { do player.moveUp();}
+        if (direction = 2) { do player.moveLeft(); }
+        if (direction = 3) { do player.moveDown(); }
+        if (direction = 4) { do player.moveRight(); }
+        if (direction = 5) { let currentSwordPosition = player.getPlayerLocation() - 640;
+                             do sword.drawSwordUp(currentSwordPosition); }
+        if (direction = 6) { let currentSwordPosition = player.getPlayerLocation() - 1;
+                             do sword.drawSwordLeft(currentSwordPosition); }
+        if (direction = 7) { let currentSwordPosition = player.getPlayerLocation() + 640;
+                             do sword.drawSwordDown(currentSwordPosition); }
+        if (direction = 8) { let currentSwordPosition = player.getPlayerLocation() + 1;
+                             do sword.drawSwordRight(currentSwordPosition); }
+        do Sys.wait(5);  // delays the next movement
+        return;
+    }
+    method void CheckCollision(){
+        if (player.getPlayerLocation() = (enemy.getEnemyLocation() - 2)
+         | player.getPlayerLocation() = (enemy.getEnemyLocation() + 2)
+         | player.getPlayerLocation() = (enemy.getEnemyLocation() + 64)
+         | player.getPlayerLocation() = (enemy.getEnemyLocation() - 64)){
+            let currentHP = currentHP - 1;
+            if (currentHP = 0) {
+                let exit = true;
+            }
+            do player.setDefaultLocation();
+            do enemy.EraseEnemy();
+            do enemy.DrawEnemy();
+            do view.DrawStatus(currentHP, 0);
+        }
+        if(currentSwordPosition = enemy.getEnemyLocation()){
+            // add 20 score 
+            // let score = score + 20;
+            do enemy.dispose();
+            let enemy = Enemy.new(980);
+            do enemy.DrawEnemy();
+            do view.DrawStatus(currentHP, currentScore + 200);
+        }
+        return;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}
+
+ //  if (key = 81)  { let exit = true; }     // q key
+        //  if (key = 87) { let direction = 1; }   // W key - moveUp
+        //  if (key = 65)  { let direction = 2; }   // A key - moveLeft
+        //  if (key = 83) { let direction = 3; }   // S key - moveDown
+        //  if (key = 68) { let direction = 4; }   // D key - moveRight
+        //  if (key = 131) { let direction = 5; }   // up arrow - SwordUp
+        //  if (key = 130) { let direction = 6; }   // left arrow - SwordLeft
+        //  if (key = 133) { let direction = 7; }   // down arrow - SwordDown
+        //  if (key = 132) { let direction = 8; }   // right arrow - SwordRight
+        //  let key = 0;
+         // waits for the key to be released
+        //  while (~(key = 0)) {
+        //     let key = Keyboard.keyPressed();
+        //     do movePlayer();
+        //     let key = 0;
+        //  }
